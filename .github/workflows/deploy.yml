@@ -18,6 +18,9 @@ jobs:
         run: |
           zip lambda.zip lambda/index.js
 
+      - name: Mover zip para pasta do Terraform
+        run: mv lambda.zip infra/          
+
       - name: Configurar credenciais AWS
         uses: aws-actions/configure-aws-credentials@v4
         with:
