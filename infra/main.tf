@@ -13,11 +13,7 @@ resource "aws_s3_bucket_object" "lambda_zip" {
   bucket = aws_s3_bucket.lambda_code.id
   key    = "lambda.zip"
   source = "${path.module}/lambda.zip"
-  etag   = filemd5("${path.module}/lambda.zip")
-  lifecycle {
-      create_before_destroy = true
-      ignore_changes = [source, etag]
-  }  
+  etag   = filemd5("${path.module}/lambda.zip")  
 }
 
 # IAM Role para Lambda
