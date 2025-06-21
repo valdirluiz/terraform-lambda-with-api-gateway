@@ -110,12 +110,4 @@ resource "aws_api_gateway_stage" "prod" {
       responseLength= "$context.responseLength"
     })
   }
-
-  method_settings {
-    resource_path    = "/*"
-    http_method      = "*"
-    logging_level    = "INFO"
-    data_trace_enabled = true
-    metrics_enabled  = true
-  }  
 }
