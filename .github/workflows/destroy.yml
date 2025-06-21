@@ -18,8 +18,11 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
       
+      - name: Remover objeto do s3
+        run: aws s3 rm "s3://lambda-with-api-gateway-code/lambda.zip"    
+
       - name: Instalar Terraform
-        uses: hashicorp/setup-terraform@v3    
+        uses: hashicorp/setup-terraform@v3          
 
       - name: Inicializar Terraform
         run: terraform init
