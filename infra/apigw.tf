@@ -53,16 +53,16 @@ resource "aws_api_gateway_rest_api" "api" {
   description = "API Gateway para Lambda"
 }
 
-resource "aws_api_gateway_resource" "proxy" {
+resource "aws_api_gateway_resource" "hello_word" {
   rest_api_id = aws_api_gateway_rest_api.api.id
   parent_id   = aws_api_gateway_rest_api.api.root_resource_id
-  path_part   = "{proxy+}"
+  path_part   = "hello-word"
 }
 
-resource "aws_api_gateway_method" "proxy" {
+resource "aws_api_gateway_method" "hello_word" {
   rest_api_id   = aws_api_gateway_rest_api.api.id
   resource_id   = aws_api_gateway_resource.proxy.id
-  http_method   = "ANY"
+  http_method   = "GET"
   authorization = "NONE"
 }
 
@@ -94,20 +94,4 @@ resource "aws_api_gateway_stage" "prod" {
   stage_name    = "prod"
   rest_api_id   = aws_api_gateway_rest_api.api.id
   deployment_id = aws_api_gateway_deployment.deployment.id
-
-  access_log_settings {
-    destination_arn = aws_cloudwatch_log_group.apigw.arn
-    format = jsonencode({
-      requestId     = "$context.requestId"
-      ip            = "$context.identity.sourceIp"
-      caller        = "$context.identity.caller"
-      user          = "$context.identity.user"
-      requestTime   = "$context.requestTime"
-      httpMethod    = "$context.httpMethod"
-      resourcePath  = "$context.resourcePath"
-      status        = "$context.status"
-      protocol      = "$context.protocol"
-      responseLength= "$context.responseLength"
-    })
-  }
 }
