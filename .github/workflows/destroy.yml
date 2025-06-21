@@ -11,25 +11,26 @@ jobs:
       - name: Checkout do código
         uses: actions/checkout@v3         
 
+      - name: Zipar arquivo JS da lambda
+        run: |
+          cd lambda && zip lambda.zip index.js
+
+      - name: Mover zip para pasta do Terraform
+        run: mv lambda/lambda.zip infra/ 
+
       - name: Configurar credenciais AWS
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
-      
-      - name: Remover objeto do s3
-        run: aws s3 rm "s3://lambda-with-api-gateway-code/lambda.zip"     
+          aws-region: us-east-1   
 
       - name: Instalar Terraform
         uses: hashicorp/setup-terraform@v3                 
 
       - name: Inicializar Terraform
         run: terraform init
-        working-directory: ./infra 
-
-      - name: Remove estado do objeto da lambda do s3
-        run: terraform state rm aws_s3_bucket_object.lambda_zip          
+        working-directory: ./infra         
 
       - name: Destruir Infraestrutura com Terraform
         run: terraform destroy -auto-approve
