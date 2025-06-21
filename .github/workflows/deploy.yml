@@ -14,10 +14,10 @@ jobs:
 
       - name: Zipar arquivo JS da lambda
         run: |
-          zip lambda.zip lambda/index.js
+          cp lambda && zip lambda.zip index.js
 
       - name: Mover zip para pasta do Terraform
-        run: mv lambda.zip infra/          
+        run: mv lambda/lambda.zip infra/          
 
       - name: Configurar credenciais AWS
         uses: aws-actions/configure-aws-credentials@v4
