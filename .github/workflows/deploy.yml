@@ -14,7 +14,7 @@ jobs:
 
       - name: Zipar arquivo JS da lambda
         run: |
-          cp lambda && zip lambda.zip index.js
+          cd lambda && zip lambda.zip index.js
 
       - name: Mover zip para pasta do Terraform
         run: mv lambda/lambda.zip infra/          
