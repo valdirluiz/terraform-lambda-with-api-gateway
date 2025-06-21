@@ -53,23 +53,23 @@ resource "aws_api_gateway_rest_api" "api" {
   description = "API Gateway para Lambda"
 }
 
-resource "aws_api_gateway_resource" "hello_word" {
+resource "aws_api_gateway_resource" "hello_world" {
   rest_api_id = aws_api_gateway_rest_api.api.id
   parent_id   = aws_api_gateway_rest_api.api.root_resource_id
-  path_part   = "hello-word"
+  path_part   = "hello-world"
 }
 
-resource "aws_api_gateway_method" "hello_word" {
+resource "aws_api_gateway_method" "hello_world" {
   rest_api_id   = aws_api_gateway_rest_api.api.id
-  resource_id   = aws_api_gateway_resource.hello_word.id
+  resource_id   = aws_api_gateway_resource.hello_world.id
   http_method   = "GET"
   authorization = "NONE"
 }
 
 resource "aws_api_gateway_integration" "lambda" {
   rest_api_id = aws_api_gateway_rest_api.api.id
-  resource_id = aws_api_gateway_resource.hello_word.id
-  http_method = aws_api_gateway_method.hello_word.http_method
+  resource_id = aws_api_gateway_resource.hello_world.id
+  http_method = aws_api_gateway_method.hello_world.http_method
   integration_http_method = "POST"
   type                    = "AWS_PROXY"
   uri                     = aws_lambda_function.api_lambda.invoke_arn
