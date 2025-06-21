@@ -1,4 +1,4 @@
-name: Destroy Infraestrutura (Manual)
+name: Remover recursos
 
 on:
   workflow_dispatch:
