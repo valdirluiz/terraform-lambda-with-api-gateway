@@ -75,13 +75,13 @@ resource "aws_api_gateway_integration" "lambda" {
   uri                     = aws_lambda_function.api_lambda.invoke_arn
 }
 
-//resource "aws_lambda_permission" "apigw" {
-//  statement_id  = "AllowAPIGatewayInvoke"
-//  action        = "lambda:InvokeFunction"
-//  function_name = aws_lambda_function.api_lambda.function_name
-//  principal     = "apigateway.amazonaws.com"
-//  source_arn    = "${aws_api_gateway_rest_api.api.execution_arn}/*/*"
-//}
+resource "aws_lambda_permission" "apigw" {
+  statement_id  = "AllowAPIGatewayInvoke"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.api_lambda.function_name
+  principal     = "apigateway.amazonaws.com"
+  source_arn    = "${aws_api_gateway_rest_api.api.execution_arn}/*/*"
+}
 
 resource "aws_api_gateway_deployment" "deployment" {
   depends_on = [
