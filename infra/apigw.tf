@@ -14,6 +14,10 @@ resource "aws_s3_bucket_object" "lambda_zip" {
   key    = "lambda.zip"
   source = "${path.module}/lambda.zip"
   etag   = filemd5("${path.module}/lambda.zip")
+  lifecycle {
+      create_before_destroy = true
+      ignore_changes = [source, etag]
+  }  
 }
 
 # IAM Role para Lambda

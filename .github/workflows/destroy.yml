@@ -11,6 +11,13 @@ jobs:
       - name: Checkout do código
         uses: actions/checkout@v3
 
+      - name: Zipar arquivo JS da lambda
+        run: |
+          cd lambda && zip lambda.zip index.js
+
+      - name: Mover zip para pasta do Terraform
+        run: mv lambda/lambda.zip infra/          
+
       - name: Configurar credenciais AWS
         uses: aws-actions/configure-aws-credentials@v4
         with:
